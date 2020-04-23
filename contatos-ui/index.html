@@ -84,21 +84,26 @@
 				delete $scope.contato;
 				$scope.contatoForm.$setPristine();
 			};
+
+			$scope.ordenarPor = function (campo) {
+				$scope.criterioDeOrdenacao = campo;
+				$scope.direcaoDaOrdenacao = !$scope.direcaoDaOrdenacao;
+			};
 		});
 	</script>
 </head>
 <body ng-controller="listaContatosCtrl">
 	<div class="jumbotron">
 		<h3>{{app}}</h3>
-
-		<table class="table">
+		<input class="form-control" type="text" ng-model="criterioDeBusca" placeholder="O que você está buscando?"/>
+		<table class="table table-striped">
 			<tr>
-				<th>Nome</th>
-				<th>Telefone</th>
+				<th><a href="" ng-click="ordenarPor('nome')">Nome</a></th>
+				<th><a href="" ng-click="ordenarPor('telefone')">Telefone</a></th>
 				<th>Operadora</th>
 				<th>#</th>
 			</tr>
-			<tr ng-repeat="contato in contatos">
+			<tr ng-repeat="contato in contatos | filter:criterioDeBusca | orderBy:criterioDeOrdenacao:direcaoDaOrdenacao"">
 				<td>{{contato.nome}}</td>
 				<td>{{contato.telefone}}</td>
 				<td>{{contato.operadora.nome}}</td>
